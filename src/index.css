@@ -31,11 +31,37 @@ h2, p{
   color:#669bbc
 }
 
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .post{
   border: 3px solid #780000;
   margin: 15px;
   padding: 15px;
   border-radius: 50px;
+}
+
+.comentarios {
+  margin: 20px;
+  padding: 10px;
+  background-color: #780000;
+  border-radius: 50px;
+}
+
+.comentarios h2{
+  background-color: #fdf0d5;
+  justify-self: center;
+  width: 200px;
+  border-radius: 50px;
+}
+
+.comentario {
+  margin: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
 }
 
 button {
@@ -52,8 +78,7 @@ button {
 button:hover {
   border-color: #646cff;
 }
-button:focus,
-button:focus-visible {
+button:focus, button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 

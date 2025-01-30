@@ -1,57 +1,50 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react'
+import Comentarios from './Comentarios'
 
-function Posts(){
-    const [posts, setPosts] = useState([])
-    const [users, setUsers] = useState([])
-    const [loading, setLoading] = useState([true])
-    
+function Posts() {
+    const [posts, setPosts] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    // Fetch posts
     useEffect(() => {
-        async function fetchPosts(){
-            const res = await fetch('https://jsonplaceholder.typicode.com/posts')
-            const postList = await res.json()
-            setPosts(postList)
-            setLoading(false)
+        async function fetchPosts() {
+            const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+            const postList = await res.json();
+            setPosts(postList);
+            setLoading(false);
         }
 
-        fetchPosts()
+        fetchPosts();
+    }, []);
 
-    }, [posts]) //[] --> Lista de dependencias vacía = sólo se llama al crear el componente
-
-    /*Añado otro user Effect para recoger los nombres de usuario */
-    useEffect(() =>{
-        async function fetchUsernames(){
-            const res_ = await fetch('https://jsonplaceholder.typicode.com/users')
-            const userList = await res_.json()
-            setUsers(userList)
-            setLoading(false)
+    // Fetch users
+    useEffect(() => {
+        async function fetchUsers() {
+            const res = await fetch('https://jsonplaceholder.typicode.com/users');
+            const userList = await res.json();
+            setUsers(userList);
         }
 
-        fetchUsernames()
-    }, [users])
+        fetchUsers();
+    }, []);
 
-    return(
+    if (loading) {
+        return <p>Cargando publicaciones...</p>;
+    }
+
+    return (
         <div className="post-list">
-            {//Código en JS
-                posts.map( post => 
-                    <div className="post" key={post.id}>
-                        <h1>{post.title}</h1>
-                        <h2>Autor: {users[post.userId-1]?.name}</h2>
-                        <p>{post.body}</p>
-                    </div>
-                )
-            }
-
+            {posts.map(post => (
+                <div className="post" key={post.id}>
+                    <h1>{post.title}</h1>
+                    <h2>Autor: {users[post.userId - 1]?.name}</h2>
+                    <p>{post.body}</p>
+                    <Comentarios postId={post.id} />
+                </div>
+            ))}
         </div>
-    )
+    );
 }
 
-//?.
-/*{
-    users.map( user => 
-    <div className="user" key={user.userId}>
-    <p>{user.name}</p>
-    </div>
-    )
-}*/
-
-export default Posts
+export default Posts;
